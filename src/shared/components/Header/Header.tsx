@@ -36,16 +36,23 @@ function Header({ className, lang }: HeaderProps) {
           <>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button>{dictionaries[lang].header.profile}</Button>
+                <Button>{dictionaries[lang]?.header.profile}</Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>{session.user?.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push(ROUTE.PROFILE)}>
-                  {dictionaries[lang].header.profile}
+                  {dictionaries[lang]?.header.profile}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => signOut()}>
-                  {dictionaries[lang].header.signOut}
+                <DropdownMenuItem
+                  onClick={() => {
+                    setTimeout(() => {
+                      signOut();
+                    }, 100);
+                    router.push(ROUTE.HOME);
+                  }}
+                >
+                  {dictionaries[lang]?.header.signOut}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -53,13 +60,13 @@ function Header({ className, lang }: HeaderProps) {
         ) : (
           <>
             <Button onClick={() => router.push(ROUTE.SIGN_IN)}>
-              {dictionaries[lang].header.signIn}
+              {dictionaries[lang]?.header.signIn}
             </Button>
             <Button
               variant="secondary"
               onClick={() => router.push(ROUTE.SIGN_UP)}
             >
-              {dictionaries[lang].header.signUp}
+              {dictionaries[lang]?.header.signUp}
             </Button>
           </>
         )}

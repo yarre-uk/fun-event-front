@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { jwtDecode } from 'jwt-decode';
 import NextAuth, { AuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { User } from '@/shared/models/user';
-import { Role } from '@/shared/types/auth';
 import { axiosAuth } from '@/shared/utils/axios';
 
 export const authOptions: AuthOptions = {

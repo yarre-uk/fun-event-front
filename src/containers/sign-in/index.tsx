@@ -87,8 +87,8 @@ export default function SignInContainer({
   useEffect(() => {
     if (searchParams.get('error')) {
       toast({
-        title: dictionaries[lang].auth.signInError,
-        description: dictionaries[lang].auth.signInErrorMessage,
+        title: dictionaries[lang]?.auth.signInError,
+        description: dictionaries[lang]?.auth.signInErrorMessage,
         variant: 'destructive',
       });
     }
@@ -114,8 +114,8 @@ export default function SignInContainer({
         </BackButton>
 
         <FormContentWrapper>
-          <Heading>{dictionaries[lang].auth.signInHeading}</Heading>
-          <Subheading>{dictionaries[lang].auth.signInSubheading}</Subheading>
+          <Heading>{dictionaries[lang]?.auth.signInHeading}</Heading>
+          <Subheading>{dictionaries[lang]?.auth.signInSubheading}</Subheading>
 
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Control
@@ -135,14 +135,14 @@ export default function SignInContainer({
             />
 
             <SubmitButton bgtype="signin" type="submit">
-              {dictionaries[lang].auth.login}
+              {dictionaries[lang]?.auth.login}
             </SubmitButton>
 
             <FormFooter>
               <HaveAccountText>
-                {dictionaries[lang].auth.noAccount}
+                {dictionaries[lang]?.auth.noAccount}
                 <SignInButton href={ROUTE.SIGN_UP}>
-                  {dictionaries[lang].auth.login}
+                  {dictionaries[lang]?.auth.login}
                 </SignInButton>
               </HaveAccountText>
             </FormFooter>

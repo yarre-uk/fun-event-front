@@ -1,7 +1,9 @@
-import { Role } from '../types/auth';
+import { Device } from './device';
 
-export type User = {
-  userId: number;
+export class User {
+  id: number;
   email: string;
-  role: Role;
-};
+  password: string;
+  role: 'Admin' | 'User';
+  devices: Device[];
+}

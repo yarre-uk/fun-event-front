@@ -13,9 +13,9 @@ export default function HomePage({
     <main className="h-[75vh] bg-background bg-cover bg-center">
       <div className="container">
         <h1 className="pt-8 text-3xl font-bold text-white">
-          {dictionaries[lang].home.title}
+          {dictionaries[lang]?.home.title}
         </h1>
-        <p>{dictionaries[lang].home.subtitle}</p>
+        <p>{dictionaries[lang]?.home.subtitle}</p>
       </div>
     </main>
   );
