@@ -1,4 +1,4 @@
-import '../globals.css';
+import '../../globals.css';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
@@ -9,11 +9,12 @@ import { Toaster } from '@/shared/components/ui/toaster';
 
 interface RootLayoutProps {
   children: ReactNode;
+  params: { lang: string };
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
-    <html lang="en" className="dark">
+    <html lang={params.lang ?? 'en'} className="dark">
       <body>
         <Providers>
           <Toaster />

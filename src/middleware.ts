@@ -1,40 +1,38 @@
-import { NextResponse } from 'next/server';
-import { NextRequestWithAuth, withAuth } from 'next-auth/middleware';
+import { match } from '@formatjs/intl-localematcher';
+import Negotiator from 'negotiator';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { AdminPages, UserPages } from './shared/constants/auth';
-import { ROUTE } from './shared/constants/routes';
+const locales = ['en', 'ua'];
+export const defaultLocale = 'en';
 
-export default withAuth(
-  function middleware(request: NextRequestWithAuth) {
-    if (
-      AdminPages.includes(request.nextUrl.pathname as ROUTE) &&
-      request.nextauth.token?.role !== 'Admin'
-    ) {
-      return NextResponse.rewrite('http://localhost:3000/404');
-    }
+function getLocale(request: Request): string {
+  const headers = new Headers(request.headers);
+  const acceptLanguage = headers.get('accept-language');
+  if (acceptLanguage) {
+    headers.set('accept-language', acceptLanguage.replace('_', '-'));
+  }
 
-    if (
-      UserPages.includes(request.nextUrl.pathname as ROUTE) &&
-      request.nextauth.token?.role !== 'Admin' &&
-      request.nextauth.token?.role !== 'User'
-    ) {
-      return NextResponse.redirect(new URL('/sign-in', request.url).toString());
-    }
-  },
-  {
-    callbacks: {
-      authorized: ({ token }) => !!token?.role,
-    },
-  },
-);
+  const headersObject = Object.fromEntries(headers.entries());
+  const languages = new Negotiator({ headers: headersObject }).languages();
+  return match(languages, locales, defaultLocale);
+}
+
+export function middleware(request: NextRequest) {
+  const locale = getLocale(request) ?? defaultLocale;
+  const pathname = request.nextUrl.pathname;
+
+  const newUrl = new URL(`/${locale}${pathname}`, request.nextUrl);
+
+  // e.g. incoming request is /products
+  // The new URL is now /en/products
+  return NextResponse.rewrite(newUrl);
+}
 
 export const config = {
   matcher: [
-    '/profile',
-    '/devices',
-    // '/admin',
-    // '/admin/set-admin',
-    // '/manga/add-manga',
-    // '/manga/edit-manga',
+    // Skip all internal paths (_next)
+    '/((?!_next|api|favicon.ico).*)',
+    // Optional: only run on root (/) URL
+    // '/'
   ],
 };

@@ -7,9 +7,10 @@ import { Device } from '@/shared/models/device';
 
 type MangaListProps = {
   devices: Device[];
+  lang: string;
 };
 
-function DevicesList({ devices }: MangaListProps) {
+function DevicesList({ devices, lang }: MangaListProps) {
   if (!devices) {
     return (
       <div className="flex h-full w-full items-center justify-center">
@@ -21,7 +22,9 @@ function DevicesList({ devices }: MangaListProps) {
   return (
     <>
       {devices?.length !== 0 ? (
-        devices.map((device) => <DeviceCard key={device.id} data={device} />)
+        devices.map((device) => (
+          <DeviceCard key={device.id} data={device} lang={lang} />
+        ))
       ) : (
         <div className="text-center">
           <BeatLoader size={30} />

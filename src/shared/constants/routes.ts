@@ -11,6 +11,6 @@ export const enum ROUTE {
   ADD_DEVICE = `${ROUTE.DEVICES}/add`,
   EDIT_DEVICE = `${ROUTE.DEVICES}/edit`,
 
-  ADMIN = '/admin',
-  SET_ADMIN = `${ROUTE.ADMIN}/set-admin`,
+  ADMIN_USER = '/admin-user',
+  ADMIN_DEVICES = '/admin-devices',
 }

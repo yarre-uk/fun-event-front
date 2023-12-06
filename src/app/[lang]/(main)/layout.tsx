@@ -1,4 +1,4 @@
-import '../globals.css';
+import '../../globals.css';
 
 import dynamic from 'next/dynamic';
 import { ReactNode } from 'react';
@@ -16,14 +16,15 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 interface RootLayoutProps {
   children: ReactNode;
+  params: { lang: string };
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
-    <html lang="en" className="dark">
+    <html lang={params.lang ?? 'en'} className="dark">
       <body>
         <Providers>
-          <Header className="pl-[70px]" />
+          <Header className="pl-[70px]" lang={params.lang ?? 'en'} />
           <Toaster />
           <Sidebar />
           <div className="h-[calc(100vh-56px)] pl-[70px] pt-4">{children}</div>

@@ -57,15 +57,12 @@ export default function SignIpContainer() {
     register: formRegister,
     handleSubmit,
     formState: { errors },
-    // getValues,
   } = useForm<TRegisterFormValues>({
     resolver: yupResolver(validationSchema) as Resolver<
       TRegisterFormValues,
       unknown
     >,
   });
-
-  console.log(errors);
 
   const onSubmit: SubmitHandler<TRegisterFormValues> = async (data) => {
     try {
@@ -81,7 +78,6 @@ export default function SignIpContainer() {
       toast({
         title: 'Error occurred',
         variant: 'destructive',
-        // description: error.errors, TODO doesn't work
       });
     }
   };

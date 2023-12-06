@@ -13,13 +13,15 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 
+import { dictionaries } from '@/app/[lang]/dictionaries';
 import { ROUTE } from '@/shared/constants/routes';
 
 type HeaderProps = {
   className?: string;
+  lang: string;
 };
 
-function Header({ className }: HeaderProps) {
+function Header({ className, lang }: HeaderProps) {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -34,28 +36,30 @@ function Header({ className }: HeaderProps) {
           <>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button>Profile</Button>
+                <Button>{dictionaries[lang].header.profile}</Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>{session.user?.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => router.push(ROUTE.PROFILE)}>
-                  Profile
+                  {dictionaries[lang].header.profile}
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => signOut()}>
-                  Sign Out
+                  {dictionaries[lang].header.signOut}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </>
         ) : (
           <>
-            <Button onClick={() => router.push(ROUTE.SIGN_IN)}>Sign In</Button>
+            <Button onClick={() => router.push(ROUTE.SIGN_IN)}>
+              {dictionaries[lang].header.signIn}
+            </Button>
             <Button
               variant="secondary"
               onClick={() => router.push(ROUTE.SIGN_UP)}
             >
-              Sign Up
+              {dictionaries[lang].header.signUp}
             </Button>
           </>
         )}

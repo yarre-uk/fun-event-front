@@ -1,6 +1,14 @@
 'use client';
 
-import { HomeIcon, List, PlusSquare, Menu, UserCog, X } from 'lucide-react';
+import {
+  HomeIcon,
+  List,
+  PlusSquare,
+  Menu,
+  UserCog,
+  X,
+  FileCog,
+} from 'lucide-react';
 import { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import { useState } from 'react';
@@ -27,26 +35,35 @@ export function getSidebarNavItems(session: Session) {
       href: ROUTE.HOME,
       icon: <HomeIcon />,
     },
-    {
-      name: 'devices',
-      href: ROUTE.DEVICES,
-      icon: <List />,
-    },
   ];
 
   if (userRole) {
-    sidebarNavItems.push({
-      name: 'add device',
-      href: ROUTE.ADD_DEVICE,
-      icon: <PlusSquare />,
-    });
+    sidebarNavItems.push(
+      {
+        name: 'add device',
+        href: ROUTE.ADD_DEVICE,
+        icon: <PlusSquare />,
+      },
+      {
+        name: 'devices',
+        href: ROUTE.DEVICES,
+        icon: <List />,
+      },
+    );
 
     if (userRole === 'Admin') {
-      sidebarNavItems.push({
-        name: 'admin',
-        href: ROUTE.ADMIN,
-        icon: <UserCog />,
-      });
+      sidebarNavItems.push(
+        {
+          name: 'admin user',
+          href: ROUTE.ADMIN_USER,
+          icon: <UserCog />,
+        },
+        {
+          name: 'admin devices',
+          href: ROUTE.ADMIN_DEVICES,
+          icon: <FileCog />,
+        },
+      );
     }
   }
 

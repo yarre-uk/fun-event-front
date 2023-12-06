@@ -9,7 +9,7 @@ import { FullPageLoader } from '@/shared/components/lib';
 import useAxiosAuth from '@/shared/hooks/useAxiosAuth';
 import { Device } from '@/shared/models/device';
 
-function DevicesPage() {
+function DevicesPage({ params: { lang } }: { params: { lang: string } }) {
   const axiosAuth = useAxiosAuth();
   const { data: session } = useSession();
 
@@ -33,7 +33,7 @@ function DevicesPage() {
     <div className="flex flex-col gap-6 pt-2">
       <p className="text-center text-2xl font-bold">Device List</p>
       <div className="flex flex-wrap justify-center gap-4">
-        <DevicesList devices={devices} />
+        <DevicesList devices={devices} lang={lang} />
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ import * as yup from 'yup';
 
 import {
   CopyrightText,
-  ForgotPasswordButton,
   Form,
   FormFooter,
   FormSection,
@@ -22,14 +21,13 @@ import {
   SignInButton,
   Subheading,
   SubmitButton,
-  OrText,
   Control,
   BackButton,
   FormContentWrapper,
 } from './styles';
 
+import { dictionaries } from '@/app/[lang]/dictionaries';
 import { SignInForm } from '@/containers/sign-in/types';
-import { GoogleSignButton } from '@/shared/components/lib';
 import { useToast } from '@/shared/components/ui/use-toast';
 import { ROUTE } from '@/shared/constants/routes';
 import { PasswordRegex } from '@/shared/constants/validationConstants';
@@ -48,7 +46,11 @@ const validationSchema = yup
   })
   .required();
 
-export default function SignInContainer() {
+export default function SignInContainer({
+  params: { lang },
+}: {
+  params: { lang: string };
+}) {
   const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();
@@ -85,8 +87,8 @@ export default function SignInContainer() {
   useEffect(() => {
     if (searchParams.get('error')) {
       toast({
-        title: 'Signin error',
-        description: 'Some error has occurred whilst you were signing in',
+        title: dictionaries[lang].auth.signInError,
+        description: dictionaries[lang].auth.signInErrorMessage,
         variant: 'destructive',
       });
     }
@@ -94,9 +96,7 @@ export default function SignInContainer() {
 
   return (
     <SignPageWrapper>
-      <PictureSection>
-        <Picture src="sign/signin.jpg" alt="bg-image" />
-      </PictureSection>
+      <PictureSection />
 
       <FormSection>
         <BackButton href={ROUTE.HOME}>
@@ -114,16 +114,10 @@ export default function SignInContainer() {
         </BackButton>
 
         <FormContentWrapper>
-          <Heading>{"Welcome back! Let's sign in to your account"}</Heading>
-          <Subheading>
-            Join our vibrant community and explore exciting features
-          </Subheading>
+          <Heading>{dictionaries[lang].auth.signInHeading}</Heading>
+          <Subheading>{dictionaries[lang].auth.signInSubheading}</Subheading>
 
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <GoogleSignButton>Sign in with Google</GoogleSignButton>
-
-            <OrText>Or</OrText>
-
             <Control
               id="email"
               type="string"
@@ -141,13 +135,15 @@ export default function SignInContainer() {
             />
 
             <SubmitButton bgtype="signin" type="submit">
-              Login
+              {dictionaries[lang].auth.login}
             </SubmitButton>
 
             <FormFooter>
               <HaveAccountText>
-                {"Don't have an account"}
-                <SignInButton href={ROUTE.SIGN_UP}>Sign up</SignInButton>
+                {dictionaries[lang].auth.noAccount}
+                <SignInButton href={ROUTE.SIGN_UP}>
+                  {dictionaries[lang].auth.login}
+                </SignInButton>
               </HaveAccountText>
             </FormFooter>
           </Form>
